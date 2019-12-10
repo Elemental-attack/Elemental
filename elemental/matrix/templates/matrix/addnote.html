@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+    {% block content %}
+        <div class="coder">
+            <h3>Enter Notes for the Technique</h3>
+        </div>
+
+        <h1>{{ technique_id }}</h1>
+
+        {% for note in tech_notes %}
+            <pre><code class="yaml">{{ note | safe }}</code></pre>
+        {% endfor %}
+
+            <form action="{% url 'notesPerTech' technique_id %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="note" id="note" value="texttitty">
+
+            <input type="submit" value="note">
+
+        </form>
+
+    {% endblock %}
+    
+    
+
+

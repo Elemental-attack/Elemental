@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% block title %}<title>Elemental</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
+
+<!--For Bootstrap-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!--End Bootstrap-->
+
+  <!-- This is used to highlight YAML -->
+  <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/ir-black.min.css">-->
+  <!--<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>-->
+  <!--<script>hljs.initHighlightingOnLoad();</script>-->
+
+  <!-- ADDED FROM CODEPEN (Inspired by Periodic Table of Elements ttps://codepen.io/ankit567/pen/wxbYXE) -->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">-->
+<script>
+$(document).ready(function () {
+    $(".element-popup").click(function (e) {
+        e.preventDefault();
+        $("#myFrame").attr('src', this.dataset.link);       
+    })
+});
+</script>
+
+<style>
+
+  body {
+  background: #101318;
+}
+a:link {
+   color:inherit;
+}
+a:visited {
+   color:inherit;
+}
+.elshadow {
+  text-shadow: 0 0 0.4vw currentColor;
+}
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 2%;
+}
+.wrapper > input {
+  -webkit-appearance: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.periodic-table {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(12, 1fr);
+  //height: 0; //uncomment this for vertical view
+}
+
+.element {
+  position: relative;
+  font-size: 0.5vw;
+  padding-bottom: 100%;
+  cursor: pointer;
+  color: #fff;
+  transition: 500ms;
+}
+.element .overlay {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #101318;
+  opacity: 0;
+  pointer-events: none;
+  transition: 500ms;
+}
+.element .square {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid;
+  box-sizing: border-box;
+  background: #101318;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition-property: transform, z-index, left, right, top, bottom;
+  transition-duration: 100ms, 0ms, 200ms, 200ms, 200ms, 200ms;
+  transition-delay: 0ms, 100ms, 0ms, 0ms, 0ms, 0ms;
+}
+.element .atomic-number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 2px;
+}
+.element .label {
+  text-align: center;
+  padding: 5px;
+  transition: 200ms;
+}
+.element .symbol {
+  font-size: 1.7vw;
+}
+.element .name {
+  font-size: 0.7vw;
+}
+
+
+.element .model {
+  display: none;
+  position: absolute;
+  left: -500%;
+  right: -500%;
+  top: -500%;
+  bottom: -500%;
+  transform: scale(0.1);
+}
+
+.element input[type="radio"] {
+  -webkit-appearance: none;
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  outline: none;
+}
+.element input[type="radio"].activate:hover ~ .square {
+  z-index: 2;
+  transform: scale(1.35);
+  transition-delay: 0ms;
+  outline: none;
+  pointer-events: none;
+}
+.element input[type="radio"].activate:checked + input[type="radio"].deactivate {
+  z-index: 3;
+  pointer-events: all;
+}
+.element input[type="radio"].activate:checked ~ .overlay {
+  opacity: 0.75;
+}
+.element input[type="radio"].activate:checked ~ .square {
+  z-index: 3;
+  transform: scale(3);
+  transition-duration: 500ms, 0ms, 200ms, 200ms, 200ms, 200ms;
+  transition-delay: 0ms;
+  outline: none;
+  cursor: auto;
+}
+.element input[type="radio"].activate:checked ~ .square .label {
+  transition-duration: 500ms;
+  transform: scale(0.75);
+}
+.element input[type="radio"].activate:checked ~ .square .atomic-weight {
+  opacity: 1;
+  transition: 500ms;
+}
+.element input[type="radio"].activate:checked ~ .square .model {
+  display: block;
+  animation: fade-in;
+  animation-duration: 1s;
+}
+.element input[type="radio"].activate:checked ~ .square .orbital {
+  animation-name: rotate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.element input[type="radio"].deactivate {
+  position: fixed;
+  display: block;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+.element input[type="radio"].deactivate:checked ~ .square {
+  z-index: 1;
+}
+
+.gap {
+  position: relative;
+  padding-bottom: 100%;
+  transition: 500ms;
+}
+.gap::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: calc(200% + 5px * 2 - 4px);
+  border-width: 0 0 2px 2px;
+  border-style: solid;
+  margin-left: -1px;
+  color: #fff;
+  opacity: 0.2;
+}
+
+.initial-access {
+  color: #ecbe59;
+}
+
+.execution {
+  color: #dee955;
+}
+
+.persistence {
+  color: #ec77a3;
+}
+
+.privilege-escalation {
+  color: #c686cc;
+}
+
+.defense-evasion {
+  color: #fd8572;
+}
+
+.credential-access {
+  color: #4cddf3;
+}
+
+.discovery {
+  color: #3aefb6;
+}
+
+.lateral-movement {
+  color: #52ee61;
+}
+
+.collection {
+  color: #759fff;
+}
+
+.command-and-control {
+  //color: #B3B0B0;
+  color: #cc4747;
+}
+
+.exfiltration {
+  color: #e6b632;
+}
+
+.impact {
+  color: #a94dff;
+}
+
+.c1{
+  grid-column: 1;
+}
+.c2{
+  grid-column: 2;
+}
+.c3{
+  grid-column: 3;
+}
+.c4{
+  grid-column: 4;
+}
+.c5{
+  grid-column: 5;
+}
+.c6{
+  grid-column: 6;
+}
+.c7{
+  grid-column: 7;
+}
+.c8{
+  grid-column: 8;
+}
+.c9{
+  grid-column: 9;
+}
+.c10{
+  grid-column: 10;
+}
+.c11{
+  grid-column: 11;
+}
+.c12{
+  grid-column: 12;
+}
+
+
+.r1 input[type="radio"].activate:checked ~ .square {
+  top: 100%;
+}
+
+.r3 input[type="radio"].activate:checked ~ .square {
+  top: -100%;
+}
+
+.c1 input[type="radio"].activate:checked ~ .square {
+  left: 100%;
+}
+
+.c12 input[type="radio"].activate:checked ~ .square {
+  left: -100%;
+}
+
+
+
+.key {
+  position: relative;
+  z-index: 1;
+  grid-row: 1;
+  grid-column-start: 1;
+  grid-column-end: 13;
+  font-size: 0.8vw;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  user-select: none;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-bottom: 20px;
+}
+.key .row {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.key .row label {
+  opacity: 0.85;
+  cursor: pointer;
+  transition: 120ms;
+  pointer-events: all;
+}
+.key .row label:hover {
+  opacity: 1 !important;
+}
+
+#initial-access:checked ~ .periodic-table .element:not(.initial-access),
+#execution:checked ~ .periodic-table .element:not(.execution),
+#persistence:checked ~ .periodic-table .element:not(.persistence),
+#privilege-escalation:checked ~ .periodic-table .element:not(.priviledge-escalation),
+#defense-evasion:checked ~ .periodic-table .element:not(.defense-evasion),
+#credential-access:checked ~ .periodic-table .element:not(.credential-access),
+#discovery:checked ~ .periodic-table .element:not(.discovery),
+#lateral-movement:checked ~ .periodic-table .element:not(.lateral-movement),
+#collection:checked ~ .periodic-table .element:not(.collection),
+#command-and-control:checked ~ .periodic-table .element:not(.command-and-control),
+#exfiltration:checked ~ .periodic-table .element:not(.exfiltration),
+#impact:checked ~ .periodic-table .element:not(.impact) {
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+#initial-access:checked ~ .periodic-table .key label:not(.initial-access),
+#execution:checked ~ .periodic-table .key label:not(.execution),
+#persistence:checked ~ .periodic-table .key label:not(.persistence),
+#privilege-escalation:checked ~ .periodic-table .key label:not(.priviledge-escalation),
+#defense-evasion:checked ~ .periodic-table .key label:not(.defense-evasion),
+#credential-access:checked ~ .periodic-table .key label:not(.credential-access),
+#discovery:checked ~ .periodic-table .key label:not(.discovery),
+#lateral-movement:checked ~ .periodic-table .key label:not(.lateral-movement),
+#collection:checked ~ .periodic-table .key label:not(.collection),
+#command-and-control:checked ~ .periodic-table .key label:not(.command-and-control),
+#exfiltration:checked ~ .periodic-table .key label:not(.exfiltration),
+#impact:checked ~ .periodic-table .key label:not(.impact) {
+  opacity: 0.65;
+}
+
+.category-toggle:checked ~ .category-cancel {
+  visibility: visible;
+  pointer-events: all;
+  cursor: pointer;
+}
+</style>
+<script>
+  window.console = window.console || function(t) {};
+</script>
+<script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+  <!-- END CODEPEN -->
+
+  {% load static %}
+
+
+</head>
+
+<body>
+
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#"><img src="{% static "matrix/elemental.png" %}" height="50px"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item">
+          <a class="nav-link h4 elshadow" href="{% url 'index' %}">Elements<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link h4 elshadow" href="{% url 'addTechnique' %}" title="Add new ATT&CK Techniques">Techniques</a> <!-- Page to add new techniques -->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link h4 elshadow" href="{% url 'addSigma' %}" title="Add new Sigma Rules">Rules</a> <!-- Page to add sigma rules -->
+        </li>
+        <li class="nav-item">
+          <!--<a class="nav-link h4" href="/about">About</a>-->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link h4 elshadow" href="/admin" target="_blank">Admin</a> <!-- Administer data from django admin site until built in -->
+        </li>
+        </ul>
+      <span class="navbar-text">
+
+      </span>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+{% extends "base_generic.html" %}
+
+<!-- short name is used for css tagging -->
+{% load short_name %}
+
+{% block title %}<title>Elemental</title>{% endblock %}
+
+{% block content %}
+
+<p><div class="text-light h4"> Here you can add custom techniques to the Elements Matrix.</div>
+<br>
+<div class="text-muted">
+    <form action="" method="post">
+    <div>
+    <label class="h5" for="technique_id">Technique ID:&nbsp;</label>
+    <input class="alert alert-secondary" id="technique_id" type="text" name="technique_id" value="CT">
+    </div>
+    <div>
+    <label class="h5" for="technique_name">Technique Name:&nbsp;</label>
+    <input class="alert alert-secondary" id="technique_name" type="text" name="technique_name" value="" style="width:325px">
+    </div>
+    <div>
+    <label class="h5" for="technique_description">Technique Description Info:&nbsp;</label>
+      <div>
+      <textarea class="alert alert-secondary" style="width: 500px; height:150px"></textarea>
+    <!--<input id="technique_description" type="text" name="technique_description" value="{{ hi }}">-->
+    </div>
+    <div>
+    <label class="h5" for="technique_detection">Technique Detection Info:&nbsp;</label>
+      <div>
+        <textarea class="alert alert-secondary" style="width: 500px; height:150px"></textarea>
+      </div>
+    </div>
+
+    <div>
+     <p>
+        <div>
+        <label class="h5" for="data_source">Data Source(s):&nbsp;</label>
+	<select id="platform" class="custom-select" multiple style="width:250px">
+         {% for dataSource in dataSources %}
+          <option value="{{ dataSource }}">{{ dataSource }}</option>
+         {% endfor %}
+	</select>
+        </div>
+     </p>
+    </div>
+    
+    <div>
+
+        <div>
+    <label class="h5" for="platform">Platform(s):&nbsp;</label>
+	<select id="data_source" class="custom-select" multiple style="width:250px">
+         {% for platform in platforms %}
+          <option value="{{ platform }}">{{ platform }}</option>
+         {% endfor %}
+	</select>
+        </div>
+    </div>
+
+    <div>
+
+    <p>
+
+        <div>
+    <label class="h5" for="tactic_name">Tactic(s):&nbsp;</label>
+	<select class="custom-select" multiple style="width:250px">
+         {% for tactic in tactics %}
+          <option value="{{ platform }}">{{ tactic }}</option>
+         {% endfor %}
+	</select>
+        </div>
+       </p>
+    </div>
+    <div>
+    <input type="submit" value="Add Technique" disabled>
+    </div>
+    </form>
+</div>
+</p>
+{% endblock %}

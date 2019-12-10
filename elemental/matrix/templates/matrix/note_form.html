@@ -1,0 +1,16 @@
+{% extends "base_generic_no_header.html" %}
+
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="coder">
+<!--        technique = {{ request.headers }}-->
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit" />
+    </div>
+
+</form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base_generic_no_header.html" %}
+
+{% block content %}
+
+<h1>Note: {{ note }} </h1>
+<p>{{note.date}}</p>
+
+<div style="margin-left:20px;margin-top:20px">
+<h4>Technique Note for: {{note.technique}}</h4>
+
+<a class="btn btn-primary" href="{% url 'note_update' note.id %}">Edit Note</a>
+
+<!-- <dl>
+  <dt>({{technique.note_set.all.count}})</dt>
+  <dd>{{note.technique}}</dd>
+</dl> -->
+
+</div>
+{% endblock %}

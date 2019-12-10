@@ -1,0 +1,144 @@
+{% extends "base_generic_no_header.html" %}
+
+{% block content %}
+
+<div class="card bg-dark text-white mb-3" style="width:975px">
+ <div class="card-header"><h3>{{ technique_id | safe }} > {{ technique_name | safe }}</h3></div>
+
+<!--TABS -->
+ <div class="card-body">
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#technique"><h4><b>Technique</b></h4></a></li>
+    <li><a data-toggle="tab" href="#atomic"><h4><b>Atomic Tests</b></h4></a></li>
+    <li><a data-toggle="tab" href="#sigma"><h4><b>Sigma Rules</b></h4></a></li>
+    <li><a data-toggle="tab" href="#notes"><h4><b>Notes</b></h4></a></li>
+    <!--<li><a data-toggle="tab" href="#logs"><h4><b>Log Sources</b></h4></a></li>--> <!--This is to be added in the future -->
+  </ul>
+
+  <div class="tab-content bg-dark text-white">
+
+<!-- TECHNIQUE TAB BEGIN -->
+
+    <div id="technique" class="tab-pane fade in active"><br>
+      <p><h4>Tactic(s): {% for tactic in tactics %}<span class="badge badge-primary">{{ tactic }}</span> {% endfor %}</h4></p>
+      <p><h4>Platform(s): {% for platform in platforms %}<span class="badge badge-primary">{{ platform }}</span> {% endfor %}</h4></p>
+      <p><h4>Data Sources: {% for data_source in data_sources %}<span class="badge badge-primary">{{ data_source }}</span> {% endfor %}</h4></p>
+
+      <p><a href='{{ technique_url | safe }}'>Mitre ATT&CK Reference</a></p>
+      <p>
+        <h3>Technique Description:</h3>
+      </p>
+      <div id="comment-md">{{ technique_description | safe }}
+        <br>
+      </div>
+      <p>
+        <h3>Technique Detection:</h3>
+      </p>
+      <div id="comment-md">{{ technique_detection | safe }}<br></div>
+    </div>
+
+<!-- ATOMICS TAB BEGIN -->
+
+    <div id="atomic" class="tab-pane fade">
+
+      {% if null_atom %}
+       <div class="h4"><br> {{ null_atom }}</div>
+      {% else %}
+       <!--Accordion wrapper-->
+       <div class="accordion md-accordion" id="accordionAtomic" role="tablist" aria-multiselectable="true">
+	<p><h4></h4></p>        
+          <!-- Accordion card -->
+          <div class="card bg-dark">
+           <!-- Card header -->
+           <div class="card-header bg-dark" role="tab" id='heading-atomic'>
+      <a data-toggle="collapse" data-parent="#accordionAtomic" href='#collapse-atomic' aria-expanded="false"
+        aria-controls='collapse-atomic'>
+        <h4 class="mb-0">
+          Atomic(s) in YAML format. <i class="fas fa-angle-down rotate-icon bg-dark"></i>
+        </h4>
+      </a>
+    </div>
+    <!-- Card body -->
+    <div id='collapse-atomic' class="collapse bg-dark" role="tabpanel" aria-labelledby='heading-atomic'
+      data-parent="#accordionAtomic">
+      <div class="card-body">
+       <pre><code class="yaml">{{ atom_yaml | safe }}</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Accordion wrapper -->
+
+      <div>{{ atom | safe }}</div>
+      {% endif %}
+    </div>
+
+<!-- SIGMA RULES TAB BEGIN -->
+
+    <div id="sigma" class="tab-pane fade">
+      <!--<h3>Sigma Rules</h3>-->
+       <!--Accordion wrapper-->
+       <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+        {% for rule in yaml_rules %}
+        {% if forloop.first %}         
+	<p><h4><br>&nbsp;Click Sigma Rule name to expand.<br></h4></p>
+        {% endif %}
+          <!-- Accordion card -->
+          <div class="card">
+           <!-- Card header -->
+           <div class="card-header bg-dark" role="tab" id='heading-{{ rule.0 }}'>
+      <a data-toggle="collapse" data-parent="#accordionEx" href='#collapse-{{ rule.0 }}' aria-expanded="false"
+        aria-controls='collapse-{{ rule.0 }}'>
+        <h4 class="mb-0">
+          {{ rule.0 | safe }} <i class="fas fa-angle-down rotate-icon bg-dark"></i>
+        </h4>
+      </a>
+    </div>
+    <!-- Card body -->
+    <div id='collapse-{{ rule.0 }}' class="collapse bg-dark" role="tabpanel" aria-labelledby='heading-{{ rule.0 }}'
+      data-parent="#accordionEx">
+      <div class="card-body bg-dark">
+       <pre><code class="yaml">{{ rule.1 | safe }}</code></pre>
+      <!--<button type="button" class="btn btn-secondary">Edit</button>
+      <button type="button" class="btn btn-danger">Delete</button> -->
+      </div>
+    </div>
+  </div>
+
+        {% empty %}
+           <h4><br>There are currently no Sigma Rules for this technique.</h4>
+        {% endfor %}
+</div>
+<!-- Accordion wrapper -->
+
+</div>
+
+<!-- NOTES TAB BEGIN -->
+
+    <div id="notes" class="tab-pane fade">
+      <p><br><h4>Here you can add and view notes related to {{ technique_name }}.</h4><br></p>
+      <!--<div class="input-group">
+      <textarea class="alert alert-secondary" style="width: 100%"></textarea>
+    </div>-->
+      <!-- <p><a class="btn btn-primary" href="{% url 'note_create' technique_id %}">Add New Note</a></p><p>&nbsp;</p> -->
+      <p><a class="btn btn-primary text-right" href="{% url 'note_create' technique_id %}">Add New Note</a></p><p>&nbsp;</p>
+      {% for note in tech_notes %}
+       <div class="alert alert-secondary" role="alert">
+           <p>Date: {{ note.date | safe }}</p>
+           <p>Note: {{ note.note | safe }}</p>
+           <div><hr></div>
+           <a class="btn btn-primary" href="{% url 'note_update' note.id %}">Edit</a>
+           <!--<button type="button" class="btn btn-danger">Delete</button>-->
+      </div>
+      {% empty %}
+       <h4>There are currently no notes for this technique.</h4>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+{% endblock %}

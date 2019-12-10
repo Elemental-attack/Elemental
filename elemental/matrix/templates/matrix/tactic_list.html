@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Tactic List FROM THE TACTIC_LIST HEML PAGEEE</h1>
+  {% if total_tactics %}
+  <div style="width: 1500px;">
+      <table>
+        <tr>
+          <td>
+            {% for tactic in total_tactics %}
+              <a href="{{ tactic.get_absolute_url }}"><span style="font-size: 8px; border: 1px solid black;">{{ tactic.tactic_name }}</span></a>
+              {% for tech in techfortactics %}
+                <a href="{{ tech.get_absolute_url }}"><span style="font-size: 8px; border: 1px solid black;">{{ tech.technique_id }}</span></a>
+              {% endfor %}
+            </td>
+            <td></td> 
+            {% endfor %}
+          &nbsp;</td>
+        </tr>
+      </table>
+    </div>
+  {% else %}
+    <p>There are no Tactics for this mother.</p>
+  {% endif %}
+{% endblock %}

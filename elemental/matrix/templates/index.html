@@ -1,0 +1,50 @@
+{% extends "base_generic.html" %}
+
+<!-- short name is used for css tagging -->
+{% load short_name %}
+
+{% block title %}<title>Elemental</title>{% endblock %}
+
+{% block content %}
+
+{% for tactic, techniques in techniques_by_tactic.items %}
+    <br>
+    <p><div class="h4 elshadow" style="color:#FFF">{{ tactic }}</div></p>
+     <div class="periodic-table">
+
+      {% for technique in techniques %}
+       <div class="elshadow element {{ tactic | short_name }} {% if forloop.counter == 73 or forloop.counter == 61 or forloop.counter == 49 or forloop.counter == 37 or forloop.counter == 25 or forloop.counter == 13 %}c1{% endif %} {% if forloop.first %}c1{% endif %}  cundefined rundefined {% if forloop.parentloop.first %}r1{% endif %}">
+	<input class="activate" type="radio" name="elements" />
+	<input class="deactivate" type="radio" name="elements" />
+	<div class="overlay"></div>
+	<div class="square">
+	 <div class="model">
+	  <div class="orbital">
+	  </div>
+	 </div>
+	 <div class="atomic-number elshadow">{{ technique.technique_id }}
+         </div>
+	 <div class="label">
+	 <div class="symbol elshadow">{{ technique.technique_abbreviation }}
+         </div>
+	 <div class="name">
+         <!--<a class="about_product" data-toggle="modal" data-link="technique/{{ technique.technique_id }}"  data-target=".bd-example-modal-lg" href="#" data-toggle="modal" title="{{ technique.technique_name }}">{{ technique.technique_name | rem_slash | truncatewords:3 }}</a>-->
+         <a class="element-popup" data-toggle="modal" data-link="technique/{{ technique.technique_id }}"  data-target=".bd-example-modal-lg" href="#" data-toggle="modal" title="{{ technique.technique_name }}">{{ technique.technique_name | rem_slash | truncatewords:3 }}</a>
+         </div>
+	</div>
+	</div>
+       </div>
+
+      {% endfor %}    
+     </div>
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+       <div class="modal-dialog modal-lg">
+       <div class="modal-content">
+         <iframe id="myFrame" width="1010" height="800px" frameborder="0" allowfullscreen></iframe>
+       </div>
+       </div>
+       </div>
+
+{% endfor %}
+
+{% endblock %}

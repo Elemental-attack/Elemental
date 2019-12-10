@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Tactic List On the MODEL TEMPLATE CLASS</h1>
+  {% if tatic_list %}
+    <ul>
+    {% for tactic in tatic_list %}
+      <li>
+        <a href="{{ tactic.get_absolute_url }}">{{ tactic.tactic_name }}</a> ({{tactic.tactic_description}})
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no Tactics.</p>
+  {% endif %}       
+{% endblock %}
