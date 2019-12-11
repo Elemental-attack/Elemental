@@ -50,7 +50,7 @@ This platform was conceived as a capstone project for University of California B
 ## Installation
 git clone https://github.com/exec-bypass/elemental-attack.git
 
-cd elemental
+cd Elemental/elemental
 
 pip install -r requirements.txt
 
