@@ -17,33 +17,33 @@ This platform was conceived as a capstone project for University of California B
 <div>
   Main Elements View
   <br />
-  <img src="https://github.com/exec-bypass/elemental-attack/blob/master/images/elementalUI.png" width=900px style="align:center;" />
+  <img src="https://github.com/Elemental-attack/Elemental/blob/master/images/elementalUI.png" width=900px style="align:center;" />
 </div>
 </p>
 <p>
 <div>
   Technique View
   <br />
-  <img src="https://github.com/exec-bypass/elemental-attack/raw/master/images/Technique.png" width=900px style="align:center;" />
+  <img src="https://github.com/Elemental-attack/Elemental/blob/master/images/Technique.png" width=900px style="align:center;" />
 </div>
 </p>
 <p>
 <div>
   Atomics View
   <br />
-  <img src="https://github.com/exec-bypass/elemental-attack/raw/master/images/AtomicYaml.png" width=900px style="align:center;" />
+  <img src="https://github.com/Elemental-attack/Elemental/blob/master/images/AtomicYaml.png" width=900px style="align:center;" />
 </div>
 </p>
 <p>
 <div>
-  <img src="https://github.com/exec-bypass/elemental-attack/blob/master/images/Atomic.png" width=900px style="align:center;" />
+  <img src="https://github.com/Elemental-attack/Elemental/blob/master/images/Atomic.png" width=900px style="align:center;" />
 </div>
   </p>
 <p>
 <div>
   Sigma Rules View
   <br />
-  <img src="https://github.com/exec-bypass/elemental-attack/blob/master/images/Sigma.png" width=900px style="align:center;" />
+  <img src="https://github.com/Elemental-attack/Elemental/blob/master/images/Sigma.png" width=900px style="align:center;" />
 </div>
 </p>
 
