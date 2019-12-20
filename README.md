@@ -1,4 +1,4 @@
-<p><div align="center"><img src="https://github.com/exec-bypass/elemental-attack/raw/master/images/97.png" width=200px style="align:center;" /></div></p>
+<p><div align="center"><img src="https://github.com/Elemental-attack/Elemental/raw/master/images/97.png" width=200px style="align:center;" /></div></p>
 
 ## Elemental
 Elemental is a centralized threat library of MITRE ATT&CK techniques, Atomic Red Team tests, and over 280 Sigma rules. It provides an alternative way to explore the ATT&CK dataset, mapping relevant Atomic Red Team tests and Sigma rules to their respective technique. Elemental allows defenders to create custom ATT&CK Techniques and upload Sigma Rules. The ATT&CK dataset was collected via the hunters-forge attackcti Python client. Atomic Red Team tests were imported from the Atomic Red Team GitHub repository. Sigma rules were imported from Sigma's GitHub rule collection if they contained ATT&CK tags.
