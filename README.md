@@ -48,7 +48,7 @@ This platform was conceived as a capstone project for University of California B
 </p>
 
 ## Installation
-git clone https://github.com/exec-bypass/elemental-attack.git
+git clone https://github.com/Elemental-attack/Elemental.git
 
 cd Elemental/elemental
 
